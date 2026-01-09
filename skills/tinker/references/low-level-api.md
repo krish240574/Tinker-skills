@@ -457,14 +457,13 @@ You can use Cookbook utilities with low-level training:
 
 ```python
 from tinker_cookbook.renderers import get_renderer, TrainOnWhat
-import tinker
+from tinker_cookbook.tokenizer_utils import get_tokenizer
 
 # Setup renderer
-tokenizer = tinker.get_tokenizer("meta-llama/Llama-3.1-8B")
+tokenizer = get_tokenizer("meta-llama/Llama-3.1-8B")
 renderer = get_renderer(
     name="chatml",
     tokenizer=tokenizer,
-    max_length=2048,
 )
 
 # Use renderer for data preparation

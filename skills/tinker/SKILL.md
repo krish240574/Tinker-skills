@@ -183,5 +183,6 @@ from tinker import types
 ## External Resources
 
 - Documentation: https://tinker-docs.thinkingmachines.ai/
+- Documentation for LLMs: https://tinker-docs.thinkingmachines.ai/llms.txt
 - Cookbook Repo: https://github.com/thinking-machines-lab/tinker-cookbook
 - Console: https://tinker-console.thinkingmachines.ai

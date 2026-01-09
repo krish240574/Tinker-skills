@@ -45,15 +45,14 @@ image_processor = get_image_processor("Qwen/Qwen2-VL-7B-Instruct")
 
 ```python
 from tinker_cookbook.renderers import get_renderer
-import tinker
+from tinker_cookbook.tokenizer_utils import get_tokenizer
 
-tokenizer = tinker.get_tokenizer("Qwen/Qwen2-VL-7B-Instruct")
+tokenizer = get_tokenizer("Qwen/Qwen2-VL-7B-Instruct")
 
 # Get vision-language renderer
 renderer = get_renderer(
     name="qwen3vl",  # Vision-specific renderer
     tokenizer=tokenizer,
-    max_length=2048,
 )
 ```
 
@@ -98,7 +97,7 @@ from tinker_cookbook.supervised.types import SupervisedDataset
 from tinker.types import Datum, ModelInput, TensorData, ImageChunk
 from tinker_cookbook.renderers import get_renderer, TrainOnWhat
 from tinker_cookbook.model_info import get_image_processor
-import tinker
+from tinker_cookbook.tokenizer_utils import get_tokenizer
 import chz
 import numpy as np
 from PIL import Image
@@ -117,13 +116,12 @@ class VisionDataset(SupervisedDataset):
         self.config = config
 
         # Setup tokenizer
-        self.tokenizer = tinker.get_tokenizer(config.model_name)
+        self.tokenizer = get_tokenizer(config.model_name)
 
         # Setup renderer (use vision renderer!)
         self.renderer = get_renderer(
             name=config.renderer_name,  # e.g., "qwen3vl"
             tokenizer=self.tokenizer,
-            max_length=config.max_length,
         )
 
         # Setup image processor
@@ -380,7 +378,7 @@ from tinker_cookbook.supervised.types import SupervisedDataset
 from tinker.types import Datum, ModelInput, TensorData
 from tinker_cookbook.renderers import get_renderer, TrainOnWhat
 from tinker_cookbook.model_info import get_image_processor, get_recommended_renderer_name
-import tinker
+from tinker_cookbook.tokenizer_utils import get_tokenizer
 
 @chz.chz
 class ClassifierDatasetConfig:
@@ -395,12 +393,11 @@ class ClassifierDataset(SupervisedDataset):
         self.config = config
 
         # Setup tokenizer and renderer
-        self.tokenizer = tinker.get_tokenizer(config.model_name)
+        self.tokenizer = get_tokenizer(config.model_name)
         renderer_name = get_recommended_renderer_name(config.model_name)
         self.renderer = get_renderer(
             name=renderer_name,
             tokenizer=self.tokenizer,
-            max_length=config.max_length,
         )
 
         # Setup image processor

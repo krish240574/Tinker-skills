@@ -17,7 +17,7 @@ Different models use different chat formats (ChatML, Llama, Qwen, etc.), and ren
 ```python
 from tinker_cookbook.model_info import get_recommended_renderer_name
 from tinker_cookbook.renderers import get_renderer
-import tinker
+from tinker_cookbook.tokenizer_utils import get_tokenizer
 
 model_name = "meta-llama/Llama-3.1-8B"
 
@@ -25,11 +25,10 @@ model_name = "meta-llama/Llama-3.1-8B"
 renderer_name = get_recommended_renderer_name(model_name)
 
 # Create renderer
-tokenizer = tinker.get_tokenizer(model_name)
+tokenizer = get_tokenizer(model_name)
 renderer = get_renderer(
     name=renderer_name,
     tokenizer=tokenizer,
-    max_length=2048,
 )
 ```
 
@@ -47,7 +46,6 @@ renderer = get_renderer(
 renderer = get_renderer(
     name="chatml",  # Explicit format
     tokenizer=tokenizer,
-    max_length=2048,
 )
 ```
 
@@ -258,13 +256,16 @@ messages = [
 
 ### max_length
 
-Controls maximum sequence length:
+The `max_length` parameter is passed to `conversation_to_datum()`, not to the renderer:
 
 ```python
-renderer = get_renderer(
-    name="chatml",
-    tokenizer=tokenizer,
+from tinker_cookbook.supervised.data import conversation_to_datum
+
+datum = conversation_to_datum(
+    messages=messages,
+    renderer=renderer,
     max_length=2048,  # Maximum tokens in sequence
+    train_on_what=TrainOnWhat.ALL_ASSISTANT_MESSAGES,
 )
 ```
 
@@ -272,11 +273,6 @@ renderer = get_renderer(
 - Truncates long conversations
 - Ensures sequences fit model context
 - Typically: 2048 for training, 4096+ for inference
-
-**Truncation strategy**:
-- Preserves final messages
-- Removes oldest messages if exceeds max_length
-- Ensures last assistant message always included
 
 ## Using Renderers with Datasets
 
@@ -416,16 +412,15 @@ For low-level API usage:
 
 ```python
 from tinker_cookbook.renderers import get_renderer
-import tinker
+from tinker_cookbook.tokenizer_utils import get_tokenizer
 
 # Get tokenizer
-tokenizer = tinker.get_tokenizer("meta-llama/Llama-3.1-8B")
+tokenizer = get_tokenizer("meta-llama/Llama-3.1-8B")
 
 # Create renderer
 renderer = get_renderer(
     name="llama3",
     tokenizer=tokenizer,
-    max_length=2048,
 )
 
 # Use in custom training loop

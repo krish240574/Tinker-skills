@@ -315,7 +315,7 @@ For complex preprocessing or non-standard data formats:
 from tinker_cookbook.supervised.types import SupervisedDataset
 from tinker.types import Datum, ModelInput, TensorData
 from tinker_cookbook.renderers import get_renderer
-from tinker import tinker
+from tinker_cookbook.tokenizer_utils import get_tokenizer
 import chz
 import numpy as np
 
@@ -332,11 +332,10 @@ class CustomDataset(SupervisedDataset):
         self.config = config
 
         # Setup tokenizer and renderer
-        self.tokenizer = tinker.get_tokenizer(config.model_name)
+        self.tokenizer = get_tokenizer(config.model_name)
         self.renderer = get_renderer(
             name=config.renderer_name,
             tokenizer=self.tokenizer,
-            max_length=config.max_length,
         )
 
         # Load and preprocess your data
@@ -387,7 +386,7 @@ class CustomDataset(SupervisedDataset):
 - Implement `__len__()` returning total batches or samples
 - Implement `__iter__()` yielding `Datum` objects
 - Create config dataclass with `@chz.chz` for parameters
-- Setup tokenizer with `tinker.get_tokenizer()`
+- Setup tokenizer with `get_tokenizer()` from `tinker_cookbook.tokenizer_utils`
 - Setup renderer with `get_renderer()`
 - Use `renderer.build_supervised_example()` for tokenization
 - Create `Datum` with `ModelInput` and `loss_fn_inputs`
