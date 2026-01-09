@@ -169,6 +169,7 @@ from tinker.types.tensor_data import TensorData
 import torch
 from tinker_cookbook import model_info, renderers
 from tinker_cookbook.recipes.math_rl.math_grading import extract_boxed, grade_answer
+from tinker_cookbook.tokenizer_utils import get_tokenizer
 
 @chz.chz
 class Config:

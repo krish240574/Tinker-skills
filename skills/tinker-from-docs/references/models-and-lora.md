@@ -61,8 +61,7 @@ from tinker_cookbook.hyperparam_utils import get_lora_lr_over_full_finetune_lr
 
 model_name = "meta-llama/Llama-3.1-8B"
 factor = get_lora_lr_over_full_finetune_lr(model_name)
-# Llama-3.2-1B: factor = 32
-# Llama-3.1-70B: factor = 128
+# Returns 10.0 for all models (empirically validated)
 ```
 
 ### Recommended Learning Rate

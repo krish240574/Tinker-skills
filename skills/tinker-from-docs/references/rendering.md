@@ -16,7 +16,7 @@ tokenizer = get_tokenizer(model_name)
 renderer = get_renderer(name=renderer_name, tokenizer=tokenizer)
 ```
 
-**Renderer names:** `qwen3`, `qwen3_disable_thinking`, `llama3`, `deepseekv3`, `qwen3vl`
+**Renderer names:** `qwen3`, `qwen3_disable_thinking`, `qwen3_instruct`, `qwen3_vl`, `qwen3_vl_instruct`, `llama3`, `deepseekv3`, `deepseekv3_thinking`, `kimi_k2`, `gpt_oss_no_sysprompt`, `gpt_oss_low_reasoning`, `gpt_oss_medium_reasoning`, `gpt_oss_high_reasoning`, `role_colon`
 
 ## HuggingFace Compatibility
 

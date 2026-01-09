@@ -61,6 +61,8 @@ import tinker
 from tinker import types
 from tinker.types.tensor_data import TensorData
 import torch
+from tinker_cookbook import model_info, renderers
+from tinker_cookbook.tokenizer_utils import get_tokenizer
 
 @chz.chz
 class Config:
